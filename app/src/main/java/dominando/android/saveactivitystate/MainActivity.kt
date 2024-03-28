@@ -2,12 +2,11 @@ package dominando.android.saveactivitystate
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 
 private const val TAG = "MainActivity"
 
@@ -33,10 +32,14 @@ class MainActivity : AppCompatActivity() {
         listNames.adapter = adapter
 
         buttonAddName.setOnClickListener {
-            val name = editTextName.text.toString()
-            names.add(editTextName.text.toString())
-            editTextName.text.clear()
-            adapter?.notifyDataSetChanged()
+            if (editTextName.text.isEmpty()) {
+                Toast.makeText(this, "O campo deve ser preenchido!", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                names.add(editTextName.text.toString().trim())
+                editTextName.text.clear()
+                adapter?.notifyDataSetChanged()
+            }
         }
     }
 
